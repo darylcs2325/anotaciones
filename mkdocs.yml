@@ -48,7 +48,7 @@ theme:
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: cyan
+      primary: blue grey
       accent: yellow
       toggle:
         icon: material/toggle-switch-off
@@ -136,7 +136,8 @@ markdown_extensions:
 plugins:
   - search
   - tags
-  # - meta
+  - social
+
 extra_javascript:
   - javascripts/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
@@ -152,3 +153,8 @@ nav:
     - analisis-python/index.md
     - Importación y Limpieza de Datos:
       - Introducción: analisis-python/importing-cleaning-data/introduccion/archivos-planos.md
+  - Cloud Computing:
+    - Bienvenidos: cloud/index.md
+    - Microsoft Azure:
+      - cloud/index.md
+      - Introducción: cloud/azure/introduccion.md
