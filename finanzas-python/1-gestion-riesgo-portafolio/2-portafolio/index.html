@@ -1,0 +1,1821 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Este sitio es para anotar todo lo que voy aprendiendo acerca de los cursos tomados y proyectos realizados.">
+      
+      
+        <meta name="author" content="Daryl CS">
+      
+      
+        <link rel="canonical" href="https://squidfunk.github.io/mkdocs-material/finanzas-python/1-gestion-riesgo-portafolio/2-portafolio/">
+      
+      
+        <link rel="prev" href="../1-riesgo-retorno/">
+      
+      
+        <link rel="next" href="../3-factor-investing/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Portafolio de Inversión - Apuntes para Data Science</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Thasadith:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Thasadith";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config",""),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#portafolio-y-backtesting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Apuntes para Data Science" class="md-header__button md-logo" aria-label="Apuntes para Data Science" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apuntes para Data Science
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Portafolio de Inversión
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="cyan" data-md-color-accent="yellow"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  Finanzas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../analisis-python/" class="md-tabs__link">
+          
+  
+    
+  
+  Análisis de Datos
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Apuntes para Data Science" class="md-nav__button md-logo" aria-label="Apuntes para Data Science" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    Apuntes para Data Science
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Finanzas
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Finanzas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Introducción a Gestión de Riesgo de Portafolio
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Introducción a Gestión de Riesgo de Portafolio
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-riesgo-retorno/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Riesgo y Retorno
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Portafolio de Inversión
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Portafolio de Inversión
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#portafolio-y-backtesting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Portafolio y Backtesting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Portafolio y Backtesting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backtesting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backtesting
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pesos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pesos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pesos-iguales-como-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pesos iguales como referencia
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#portafolios-ponderadas-por-capitalizacion-de-mercado" class="md-nav__link">
+    <span class="md-ellipsis">
+      Portafolios ponderadas por capitalización de mercado
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correlacion-y-covarianza" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correlación y Covarianza
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Correlación y Covarianza">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#portafolio-de-markowitz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Portafolio de Markowitz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Portafolio de Markowitz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frontera-eficiente-de-markowitz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frontera eficiente de Markowitz
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplos
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-factor-investing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inversión Factorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../analisis-python/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Análisis de Datos
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Análisis de Datos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Importación y Limpieza de Datos
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Importación y Limpieza de Datos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../analisis-python/importing-cleaning-data/introduccion/archivos-planos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introducción
+  </span>
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="Recently added">
+    </span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#portafolio-y-backtesting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Portafolio y Backtesting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Portafolio y Backtesting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backtesting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backtesting
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pesos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pesos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pesos-iguales-como-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pesos iguales como referencia
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#portafolios-ponderadas-por-capitalizacion-de-mercado" class="md-nav__link">
+    <span class="md-ellipsis">
+      Portafolios ponderadas por capitalización de mercado
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correlacion-y-covarianza" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correlación y Covarianza
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Correlación y Covarianza">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#portafolio-de-markowitz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Portafolio de Markowitz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Portafolio de Markowitz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frontera-eficiente-de-markowitz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frontera eficiente de Markowitz
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplos
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Portafolio de Inversión</h1>
+
+<h2 id="portafolio-y-backtesting">Portafolio y Backtesting<a class="headerlink" href="#portafolio-y-backtesting" title="Permanent link">&para;</a></h2>
+<p>El portafolio (cartera) es un conjunto de activos financieros de diferentes empresas que puede tener un inversionista, pueden ser:</p>
+<ul>
+<li>Acciones</li>
+<li>Bonos</li>
+<li>Fondos de inversión</li>
+<li>Criptomonedas</li>
+<li>Divisas</li>
+<li>Bienes raíces</li>
+</ul>
+<p>El objetivo de una cartera es poder maximizar las ganancias y minimizar el riesgo. Se gestiona a través de diversificación, que consiste en invertir en varios activos para reducir la exposición a pérdidas significativas.</p>
+<h3 id="backtesting">Backtesting<a class="headerlink" href="#backtesting" title="Permanent link">&para;</a></h3>
+<p>El Backtesting es una técnica que se utiliza para probar la efectividad de una estrategia de inversión, simulando cómo habría funcionado en el pasado.</p>
+<ul>
+<li>Se define la estrategia de inversión</li>
+<li>Se aplican los datos históricos del mercado</li>
+<li>Se analizan los resultados<ul>
+<li>Rendimiento potencial</li>
+<li>Riesgo</li>
+<li>Rentabilidad ajustada al riesgo</li>
+</ul>
+</li>
+</ul>
+<h3 id="pesos">Pesos<a class="headerlink" href="#pesos" title="Permanent link">&para;</a></h3>
+<p>En un portalio al haber varios activos financieros, es importante saber cuál es el peso de cada uno, su cálculo no es más que la proporción que tiene un activo con el total de los activos. Por ejemplo, si tiene dos acciones, uno $/. 5000.00 en <code>AAPL</code> y $/. 3000.00 <code>MSFT</code>, entonces el peso de <code>APPL</code> es 0.625 y de <code>MSFT</code> es 0.375.</p>
+<p>Es importante saber el peso de cada activo de nuestra cartera, ya que este nos ayuda a controlar el riesgo que se está asumiendo en cada tipo de activo. Mediante los pesos podemos realizar un <strong>Rebalanceo</strong>; por ejemplo, si tenemos un activo con un peso de 50% a 70%, entonces debemos de mover nuestro capital de este activo, ya que en caso de haber una caída significativa en ese activo, nos perjudicaría en gran medida.</p>
+<h3 id="ejemplo">Ejemplo<a class="headerlink" href="#ejemplo" title="Permanent link">&para;</a></h3>
+<p>Se trabajará con los siguientes datos:</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>AAPL</th>
+<th>MSFT</th>
+<th>XOM</th>
+<th>JNJ</th>
+<th>JPM</th>
+<th>AMZN</th>
+<th>GE</th>
+<th>FB</th>
+<th>T</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2017-01-03</td>
+<td>0.002849</td>
+<td>0.007081</td>
+<td>0.006980</td>
+<td>0.005468</td>
+<td>0.010894</td>
+<td>0.005068</td>
+<td>0.002848</td>
+<td>0.015732</td>
+<td>0.011521</td>
+</tr>
+<tr>
+<td>2017-01-04</td>
+<td>-0.001119</td>
+<td>-0.004474</td>
+<td>-0.011002</td>
+<td>-0.001640</td>
+<td>0.001844</td>
+<td>0.004657</td>
+<td>0.000316</td>
+<td>0.015660</td>
+<td>-0.005811</td>
+</tr>
+<tr>
+<td>2017-01-05</td>
+<td>0.005085</td>
+<td>0.000000</td>
+<td>-0.014907</td>
+<td>0.010463</td>
+<td>-0.009205</td>
+<td>0.030732</td>
+<td>-0.005678</td>
+<td>0.016682</td>
+<td>-0.002806</td>
+</tr>
+<tr>
+<td>2017-01-06</td>
+<td>0.011148</td>
+<td>0.008668</td>
+<td>-0.000565</td>
+<td>-0.004792</td>
+<td>0.000116</td>
+<td>0.019912</td>
+<td>0.002855</td>
+<td>0.022707</td>
+<td>-0.019924</td>
+</tr>
+<tr>
+<td>2017-01-09</td>
+<td>0.009159</td>
+<td>-0.003183</td>
+<td>-0.016497</td>
+<td>-0.000172</td>
+<td>0.000697</td>
+<td>0.001168</td>
+<td>-0.004745</td>
+<td>0.012074</td>
+<td>-0.012585</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Company Name</th>
+<th>Ticker</th>
+<th>Portfolio Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple</td>
+<td>AAPL</td>
+<td>12%</td>
+</tr>
+<tr>
+<td>Microsoft</td>
+<td>MSFT</td>
+<td>15%</td>
+</tr>
+<tr>
+<td>Exxon Mobil</td>
+<td>XOM</td>
+<td>8%</td>
+</tr>
+<tr>
+<td>Johnson &amp; Johnson</td>
+<td>JNJ</td>
+<td>5%</td>
+</tr>
+<tr>
+<td>JP Morgan</td>
+<td>JPM</td>
+<td>9%</td>
+</tr>
+<tr>
+<td>Amazon</td>
+<td>AMZN</td>
+<td>10%</td>
+</tr>
+<tr>
+<td>General Electric</td>
+<td>GE</td>
+<td>11%</td>
+</tr>
+<tr>
+<td>Facebook</td>
+<td>FB</td>
+<td>14%</td>
+</tr>
+<tr>
+<td>AT&amp;T</td>
+<td>T</td>
+<td>16%</td>
+</tr>
+</tbody>
+</table>
+<div class="language-py highlight"><span class="filename">Rendimiento Acumulado</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">portafolio</span> <span class="o">=</span> <span class="n">portafolio</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">portafolio</span><span class="o">=</span><span class="n">portafolio</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span> <span class="c1">#(1)!</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">pesos_portafolio</span><span class="o">=</span><span class="p">[</span><span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.09</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.14</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">]</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">RendimientoPeso</span> <span class="o">=</span> <span class="n">portafolio</span> <span class="o">@</span> <span class="n">pesos_portafolio</span> <span class="c1">#(2)!</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">portafolio</span><span class="p">[</span><span class="s2">&quot;Rendimiento&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">RendimientoPeso</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">RendimientoAculativo</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">RendimientoPeso</span><span class="p">)</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span> <span class="c1">#(3)!</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">RendimientoAculativo</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</span></code></pre></div>
+<ol>
+<li>Como se indicó en el capítulo anterior, tenemos que tener como índice a la columna fecha y que esté ordenada ascendentemente.</li>
+<li>El operador <code>@</code> permite la multiplicación de matrices o arrays, entrega un solo valor por cada fila. Multiplica el peso por el rendimiento que se tuvo en el día, suma cada uno de los resultados de cada activo y nos entrega un rendimiento diario de la cartera.</li>
+<li>Esto se vió en el capítulo anterior, es el cálculo del rendimiento discreto acumulativo.</li>
+</ol>
+<figure>
+  <img alt="Image title" src="../../../images/finanzas-1-gestion-riesgo-portafolio/RendimientoPesos.png" width="100%" />
+  <figcaption>Rendimiento por Peso</figcaption>
+</figure>
+<p>Qué hubiera pasado si solo hubieramos invertido en un solo activo</p>
+<figure>
+  <img alt="Image title" src="../../../images/finanzas-1-gestion-riesgo-portafolio/RendimientoUnitario.png" width="100%" />
+  <figcaption>Retorno Unitario</figcaption>
+</figure>
+<div class="admonition success">
+<p class="admonition-title">Efecto de los pesos en nuestro portafolio</p>
+<p>Tener una cartera balanceada nos ayuda a disminuir el riesgo de perder todo, esto también afecta al beneficio, si tenemos un monto pequeño en una activo y este activo crece drásticamente, su impacto en nuestra cartera será poca ya que tenemos muy poco capital en este activo, pero esto también nos beneficia en caso que un activo cae drásticamente. En esta última imagen podemos ver cómo empresa como <strong>Apple</strong> y <strong>Amazon</strong> tuvieron un beneficio alrededor del 50%, pero también empresas como <strong>General Electric</strong> tuvieron una gran caída, si solo hubieramos invertido en esta empresa hubieramos tenido una pérdida del 42%.</p>
+</div>
+<h3 id="pesos-iguales-como-referencia">Pesos iguales como referencia<a class="headerlink" href="#pesos-iguales-como-referencia" title="Permanent link">&para;</a></h3>
+<p>Una de las formas que podemos comparar nuestra estrategia, es compararlo con una estrategia donde la cartera tiene un pesos igual para todos los activos, veamos cómo sería.</p>
+<div class="language-py highlight"><span class="filename">Rendimiento Igual</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">pesos_iguales</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="c1">#(1)!</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">portafolio</span><span class="p">[</span><span class="s2">&quot;RendimientoEW&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">portafolio</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:</span><span class="mi">9</span><span class="p">]</span> <span class="o">@</span> <span class="n">pesos_iguales</span> <span class="c1">#(2)!</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="hll"><span class="k">def</span><span class="w"> </span><span class="nf">cumulative_returns_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columnas</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span></span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="hll">    <span class="n">df2</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+</span></span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="hll">    <span class="k">if</span> <span class="n">columnas</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="hll">        <span class="n">columnas</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</span></span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="hll">    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columnas</span><span class="p">:</span>
+</span></span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="hll">        <span class="n">df2</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span>
+</span></span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span> <span class="c1">#(3)!</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">cumulative_returns_plot</span><span class="p">(</span><span class="n">portafolio</span><span class="p">,</span> <span class="s2">&quot;Rendimiento&quot;</span><span class="p">,</span> <span class="s2">&quot;RendimientoEW&quot;</span><span class="p">)</span> <span class="c1">#(4)!</span>
+</span></code></pre></div>
+<ol>
+<li>Creamos una array con 9 elementos del mismo valor (1/9), estos serían los pesos de nuestro portafolio.</li>
+<li>Seleccionamos las primeras 9 columnas con todas sus filas para realizar el cálculo del nuevo rendimiento, hay que tener en cuenta que hay una nueva columna que es <code>Rendimiento</code> que se calculó en el ejemplo de arriba.</li>
+<li>Creamos una función que nos permite graficar las columnas.</li>
+<li>Utilizando la función que hemos creado, graficamos ambos rendimientos.</li>
+</ol>
+<figure>
+  <img alt="Image title" src="../../../images/finanzas-1-gestion-riesgo-portafolio/RendimientoVsRendimientoEW.png" width="100%" />
+  <figcaption>Rendimiento con Pesos iguales</figcaption>
+</figure>
+<h3 id="portafolios-ponderadas-por-capitalizacion-de-mercado">Portafolios ponderadas por capitalización de mercado<a class="headerlink" href="#portafolios-ponderadas-por-capitalizacion-de-mercado" title="Permanent link">&para;</a></h3>
+<p>Una estrategia muy utilizada es que los pesos no lo determinemos nosotros, sino que sea proporcial a la capitalización de cada empresa. Esta misma estrategia lo utiliza el indicador <strong>S&amp;P 500</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Company Name</th>
+<th>Ticker</th>
+<th>Market Cap ($ Billions)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple</td>
+<td>AAPL</td>
+<td>601.51</td>
+</tr>
+<tr>
+<td>Microsoft</td>
+<td>MSFT</td>
+<td>469.25</td>
+</tr>
+<tr>
+<td>Exxon Mobil</td>
+<td>XOM</td>
+<td>349.50</td>
+</tr>
+<tr>
+<td>Johnson &amp; Johnson</td>
+<td>JNJ</td>
+<td>310.48</td>
+</tr>
+<tr>
+<td>JP Morgan</td>
+<td>JPM</td>
+<td>299.77</td>
+</tr>
+<tr>
+<td>Amazon</td>
+<td>AMZN</td>
+<td>356.94</td>
+</tr>
+<tr>
+<td>General Electric</td>
+<td>GE</td>
+<td>268.88</td>
+</tr>
+<tr>
+<td>Facebook</td>
+<td>FB</td>
+<td>331.57</td>
+</tr>
+<tr>
+<td>AT&amp;T</td>
+<td>T</td>
+<td>246.09</td>
+</tr>
+</tbody>
+</table>
+<div class="language-PY highlight"><span class="filename">Rendimiento Capitalización del Mercado</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">market_capitalizations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">601.51</span><span class="p">,</span> <span class="mf">469.25</span><span class="p">,</span> <span class="mf">349.5</span><span class="p">,</span> <span class="mf">310.48</span><span class="p">,</span> <span class="mf">299.77</span><span class="p">,</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>                                   <span class="mf">356.94</span><span class="p">,</span> <span class="mf">268.88</span><span class="p">,</span> <span class="mf">331.57</span><span class="p">,</span> <span class="mf">246.09</span><span class="p">])</span> <span class="c1">#(1)!</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">mcap_weights</span> <span class="o">=</span> <span class="n">market_capitalizations</span><span class="o">/</span><span class="n">market_capitalizations</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="c1">#(2)!</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">portafolio</span><span class="p">[</span><span class="s2">&quot;Rendimiento_MCap&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">portafolio</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:</span><span class="mi">9</span><span class="p">]</span> <span class="o">@</span> <span class="n">mcap_weights</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">cumulative_returns_plot</span><span class="p">(</span><span class="n">portafolio</span><span class="p">,</span> <span class="s2">&quot;Rendimiento&quot;</span><span class="p">,</span> <span class="s2">&quot;RendimientoEW&quot;</span><span class="p">,</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>                        <span class="s2">&quot;Rendimiento_MCap&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<ol>
+<li>Creamos nuestro array con la capitlización de mercado de cada empresa</li>
+<li>Ponderamos los valores, respecto al total.</li>
+</ol>
+<figure>
+  <img alt="Image title" src="../../../images/finanzas-1-gestion-riesgo-portafolio/Rendimiento_MCap.png" width="100%" />
+  <figcaption>Rendimiento Pesos por Market Capital</figcaption>
+</figure>
+<div class="admonition info">
+<p class="admonition-title">Resumen</p>
+<p>Podemos ver que en este caso la mejor opción es la ponderación respecto a la capitalización de mercado de cada activo, una de sus desventajas de usar esta estrategia es que nuestro portafolio estará muy influenciado por las grandes empresas, estando desbalanceado. Sin embargo, es una estrategia que tiene buenos retornos y sabiendo que es utilizada por muchos indicarodores con buenos rendimientos, es una buena elección.</p>
+</div>
+<hr />
+<h2 id="correlacion-y-covarianza">Correlación y Covarianza<a class="headerlink" href="#correlacion-y-covarianza" title="Permanent link">&para;</a></h2>
+<p>La covarianza mide si dos variables tienen el mismo sentido o dirección, es decir, si una variable aumenta, la otra también aumentará, o si uno aumenta la otra disminuirá (diferente dirección). Veamos:</p>
+<ul>
+<li>Covarianza positiva: Las variables se mueven en la misma dirección.</li>
+<li>Covarianza negativa: Las variables se mueven en dirección opuesta.</li>
+</ul>
+<p>Sin embargo, la covarianza por sí sola no nos indica qué tan relacionada están ambas variables, aquí entra en juego la <strong>Correlación de Pearson</strong>, que no es más que la normalización de la <strong>covarianza</strong>.</p>
+<ul>
+<li>Correlación -&gt; +1: Alta relación, se mueven en la misma dirección.</li>
+<li>Correlación -&gt; 0: Sin relación.</li>
+<li>Correlación -&gt; -1: Alta relación opuesta, se mueven de dirección contraria.</li>
+</ul>
+<p>En el ámbito financiero, la alta correlación positiva en activos no es una buena señal para nuestro portafolio, esto es debido a que si por algun contexto político, social o económico, hay una caída en nuestro activo, al estar todas relacionadas (en el mismo sentido) entonces todos nuestros rendimientos caerá. Por tal motivo, se recomienda tener carteras diversificadas y para esto nos ayudará la correlación.</p>
+<p>Veamos el caso del índice bursátil <strong>S&amp;P 500</strong>, tiene las 500 empresas más grandes de los EE.UU respecto a su capitalización en el mercado, donde hay empresas de varios rubros (diversificado), tecnológicas, energéticas, inmobiliarias, salud, financiero, etc. Este índice es robusto y se demuestra viendo cómo ha ido durante toda su historia, teniendo un rendimiento promedio anual de <span class="arithmatex">\(10.50\%\)</span> y de los últimos 5 años fue de <span class="arithmatex">\(9.4\%\)</span>.</p>
+<p>Por otro lado, tenemos el caso del índice bursátil <strong>NASDAQ-100</strong>, tiene a las 100 empresas más grandes de los EEUU, respecto a su capitalización en el mercado, <strong>solo del sector tecnológico</strong>. Si bien la teoría nos dice que no es bueno que los activos de nuestra cartera tenga alta correlación, este índice nos muestra que aún así se puede llegar a tener un gran rendimiento. Este índice tuvo un redimiento promedio anual en toda su historia de <span class="arithmatex">\(12\% a 13\%\)</span> y en los últimos 5 años un <span class="arithmatex">\(17 \%\)</span>. Quizás pensemos que considerar la correlación ya no es una buena medida para medir nuestra estrategia, pero este es un caso muy especial, ya que las empresas que componen a este índice son muy inovadoras, y están en constante desarrollo y adaptabilidad. Veamos su rendimiento desde el año 2017</p>
+<table>
+<thead>
+<tr>
+<th>Año</th>
+<th>S&amp;P 500</th>
+<th>Nasdaq-100</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2018</td>
+<td>-4.4%</td>
+<td>-1.0%</td>
+</tr>
+<tr>
+<td>2019</td>
+<td>+31.5%</td>
+<td>+38.0%</td>
+</tr>
+<tr>
+<td>2020</td>
+<td>+18.4%</td>
+<td>+47.6%</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>+26.9%</td>
+<td>+26.6%</td>
+</tr>
+<tr>
+<td>2022</td>
+<td>-19.4%</td>
+<td>-33.1%</td>
+</tr>
+<tr>
+<td>2023</td>
+<td>+22.4%</td>
+<td>+55.0%</td>
+</tr>
+<tr>
+<td>2024</td>
+<td>+23.3%</td>
+<td>+24.8%</td>
+</tr>
+</tbody>
+</table>
+<p>Como se puede ver, el rendimiento del índice <strong>NASDAQ-100</strong> es mayor en promedio que el índice <strong>S&amp;P 500</strong>, sin embargo, podemos ver que en el año 2022 tuvo una gran caída (<span class="arithmatex">\(-33.1 \%\)</span>) que más que del S&amp;P 500, en ese año por diversos motivo el rubro tecnológico tuvo una gran caída, por lo tanto <strong>NASDAQ-100</strong> se vio gravemente afectado, el <strong>S&amp;P 500</strong> también sufrió este golpe ya que cerca del <span class="arithmatex">\(28\%\)</span> está invertida en tecnología.</p>
+<p>Para ver la volatilidad del portafolio (<span class="arithmatex">\(\sigma_{portafolio}\)</span>) se requiere conocer el peso y covarianza.</p>
+<div class="arithmatex">\[
+\begin{equation}
+\bbox[3pt, border: 1pt solid #00adc3]{\sigma_{portafolio} = \sqrt{w_T \cdot \sum \cdot w}}
+\label{eq:volat_portafolio}
+\end{equation}
+\]</div>
+<p>Donde,</p>
+<ul>
+<li><span class="arithmatex">\(\sigma_{portafolio}\)</span>: Volatilidad del portafolio.</li>
+<li><span class="arithmatex">\(\sum\)</span>: Matriz de covarianza de retornos.</li>
+<li><span class="arithmatex">\(w\)</span>: Matriz de pesos del portafolio (<span class="arithmatex">\(w_T\)</span> es la transposición de la matriz de peso).</li>
+<li><span class="arithmatex">\(\cdot\)</span> : Operador multiplicación punto.</li>
+</ul>
+<p>Esta fórmula es una representación matricial de la volatilidad de un portafolio, es una gran ventaja para operaciones computacionales.</p>
+<h3 id="ejemplo_1">Ejemplo<a class="headerlink" href="#ejemplo_1" title="Permanent link">&para;</a></h3>
+<div class="language-py highlight"><span class="filename">Correlación</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">df_corr</span> <span class="o">=</span> <span class="n">portafolio</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span> <span class="c1">#(1)!</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df_corr</span><span class="p">,</span> <span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> 
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>            <span class="n">annot_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span> <span class="c1">#(2)!</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span> <span class="c1">#(3)!</span>
+</span></code></pre></div>
+<ol>
+<li>Solo tomamos los datos de los rendimientos diarios de los activos.</li>
+<li>Creamos nuestro mapa de calor<ul>
+<li><code class="language-py highlight"><span class="n">df_corr</span></code>: El dataframe que contiene la correlación.</li>
+<li><code class="language-py highlight"><span class="n">annot</span><span class="o">=</span><span class="kc">True</span></code>: Para que se muestre los valores en los cuadros.</li>
+<li><code class="language-py highlight"><span class="n">cmpa</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span></code>: Paleta de color.</li>
+<li><code class="language-py highlight"><span class="n">linewidths</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span></code>: Tamaño de la línea que separa a cada cuadro.</li>
+<li><code class="language-py highlight"><span class="n">annot_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">}</span></code>: Tamaño de los números en el cuadro.</li>
+</ul>
+</li>
+<li>Rotamos el texto del <code>eje X</code> a 90°, y del <code>eje Y</code> lo colocamos a 0°.</li>
+</ol>
+<figure>
+  <img alt="Image title" src="../../../images/finanzas-1-gestion-riesgo-portafolio/CorrelacionPortafolio.png" width="100%" />
+  <figcaption>Correlación de Portafolio</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Conclusión del mapa de calor</p>
+<p>Podemos ver que tenemos activos que están relacionadas, como <code>APPL</code>, <code>MSFT</code>, <code>FB</code> en su mayoría superan el <span class="arithmatex">\(0.50\)</span>, esto es de esperarse sabiendo que estas empresas son tecnológicas. También tenemos activos sin relación entre ellas y otras que están ligeranmente (muy poco) relacionadas en dirección opuesta.</p>
+</div>
+<div class="language-py highlight"><span class="filename">Volatilidad</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">df_cov</span> <span class="o">=</span> <span class="n">portafolio</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">df_cov_anual</span> <span class="o">=</span> <span class="n">df_cov</span><span class="o">*</span><span class="mi">252</span> <span class="c1"># 252 días hábiles de comercio en un año</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">portfolio_volatility</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pesos_portafolio</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>                                      <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">df_cov_anual</span><span class="p">,</span> <span class="n">pesos_portafolio</span><span class="p">)))</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">portfolio_volatility</span><span class="p">)</span> <span class="c1"># 8.93%</span>
+</span></code></pre></div>
+<p>Para tener una idea de qué tan volátil es nuestra cartera, veamos el siguiente cuadro</p>
+<table>
+<thead>
+<tr>
+<th>Volatilidad Anual (%)</th>
+<th>Nivel de Volatilidad</th>
+<th>Ejemplos de Activos/Portafolios</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-5%</td>
+<td>Muy baja</td>
+<td>Bonos del Tesoro, cuentas de ahorro</td>
+</tr>
+<tr>
+<td>5-10%</td>
+<td>Baja</td>
+<td>Portafolios diversificados conservadores</td>
+</tr>
+<tr>
+<td>10-20%</td>
+<td>Moderada</td>
+<td>S&amp;P 500, portafolios balanceados</td>
+</tr>
+<tr>
+<td>20-30%</td>
+<td>Alta</td>
+<td>Nasdaq-100, acciones tecnológicas</td>
+</tr>
+<tr>
+<td>30% o más</td>
+<td>Muy alta (extrema)</td>
+<td>Criptomonedas, startups, portafolios especulativos</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Conclusiones</p>
+<p>De acuerdo al cuadro de volatilidad, nuestra cartera tiene una volatiliad baja, esto implicaría un menor riesgo a pérdidas, pero a su vez ganancias no tan grandes como otras. Aunque hemos visto que el rendimiento durante el año 2017 fue cerca del <span class="arithmatex">\(20\%\)</span>, lo cuál lo hace muy buena estrategia. Faltaría realizar la prueba a nivel histórico cómo se hubiese comportado esta cartera.</p>
+</div>
+<hr />
+<h2 id="portafolio-de-markowitz">Portafolio de Markowitz<a class="headerlink" href="#portafolio-de-markowitz" title="Permanent link">&para;</a></h2>
+<p>Imaginemos que de nuestros 9 activos hemos creado <span class="arithmatex">\(100,000\)</span> diferentes carteras, cada una con un peso diferente y queremos saber cuál de todas las carteras es la mejor en relación riesgo-rentabilidad.</p>
+<div class="arithmatex">\[
+\begin{equation}
+\bbox[3pt, border: 1pt solid #00adc3]{S=\frac{R_a-r_f}{\sigma_a}}
+\label{eq:markowitz}
+\end{equation}
+\]</div>
+<p>Donde,</p>
+<ul>
+<li><span class="arithmatex">\(S\)</span>: Índice de Sharpe (Sharpe Ratio).</li>
+<li><span class="arithmatex">\(R_a\)</span>: Rendimiento esperado. Es el retorno promedio de la inversión durante un periodo de tiempo, se expresa en porcentaje.</li>
+<li><span class="arithmatex">\(r_f\)</span>: Rendimiento libre de riesgo. Suelen ser los bonos del gobierno, donde su tasa de riesgo es cercano a cero.</li>
+<li><span class="arithmatex">\(\sigma_a\)</span>: Desviación estándar o volatilidad, se calcula usando retornos históricos.</li>
+</ul>
+<p>Nos permite comparar el rendimiento de diferentes carteras por cada unidad de incremento de riesgo.</p>
+<ul>
+<li><span class="arithmatex">\(S&lt;0\)</span>: La inversión tiene un desempeño peor que <span class="arithmatex">\(r_f\)</span>.</li>
+<li><span class="arithmatex">\(0&lt;S&lt;1\)</span>: Inversión subóptima.</li>
+<li><span class="arithmatex">\(1&lt;S&lt;2\)</span>: Inversión buena.</li>
+<li><span class="arithmatex">\(3&lt;S\)</span>: Inversión excelente (poco común).</li>
+</ul>
+<h3 id="frontera-eficiente-de-markowitz">Frontera eficiente de Markowitz<a class="headerlink" href="#frontera-eficiente-de-markowitz" title="Permanent link">&para;</a></h3>
+<p>Son las carteras que son las óptimas en relación rendimiento-riesgo. Todo portofolio que se encuentre en la frontera son las más eficiente, ya que no hay forma de mejorar el rendimiento sin asumir riesgo, las carteras que están debajo son ineficiente, porque con un mismo nivel de riesgo se obtiene un rendimiento menor.</p>
+<p>Esto se obtiene después de realizar un análisis a nivel hitórico de todas las combinaciones posibles de los pesos de cada activo, más no es una predicción.</p>
+<p><figure markdown="span">
+  <img alt="Image title" src="../../../images/finanzas-1-gestion-riesgo-portafolio/FronteraEficiencia.png" width="80%" />
+<br />
+<figcaption id="frontera_eficiencia">Frontera de eficiencia</figcaption></p>
+</figure>
+<ul>
+<li>
+<p><strong>Max Shape Ratio (MSR)</strong> Es el portafolio con el máximo índice de Shape, es el punto de tangencia entre la frontera de eficiencia y el <strong>Capitla Market Line</strong> (teoría de <strong>CAPM</strong>):</p>
+</li>
+<li>
+<p><strong>Global Minimum Volatility (GMV)</strong>: Es el portafolio con la volatilidad mínima.</p>
+</li>
+<li><strong><span class="arithmatex">\(R_f\)</span></strong>: Es el punto donde no hay riesgo (Risk Free)</li>
+</ul>
+<div class="admonition success">
+<p class="admonition-title">MSR vs GSM</p>
+<p>Si bien el <strong>MSR</strong> es el que brinda un mayor retorno por el riesgo tomado, suele ser más inconsistente que el <strong>GSM</strong>, esto es debido a que cuando lo aplicamos en la actuliadad los resultados varían mucho, debido a los múltiples factores del mercado, siendo el <strong>GSM</strong> más "conservadora" debido al poco riesgo que se toma, pero obtiendo un buen retorno.</p>
+</div>
+<h3 id="ejemplos">Ejemplos<a class="headerlink" href="#ejemplos" title="Permanent link">&para;</a></h3>
+<p>Hemos creado una lista random de pesos para cada activo de nuestro portafolio, se muestra el datafram <code>pesos_aleatorios</code>:</p>
+<table>
+<thead>
+<tr>
+<th>AAPL weight</th>
+<th>MSFT weight</th>
+<th>XOM weight</th>
+<th>JNJ weight</th>
+<th>JPM weight</th>
+<th>AMZN weight</th>
+<th>GE weight</th>
+<th>FB weight</th>
+<th>T weight</th>
+<th>Returns</th>
+<th>Volatility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.000053</td>
+<td>0.263110</td>
+<td>0.007022</td>
+<td>0.040087</td>
+<td>0.000027</td>
+<td>0.024316</td>
+<td>0.355899</td>
+<td>0.299400</td>
+<td>0.010087</td>
+<td>0.127453</td>
+<td>0.171565</td>
+</tr>
+<tr>
+<td>0.042360</td>
+<td>0.034922</td>
+<td>0.079355</td>
+<td>0.043057</td>
+<td>0.001435</td>
+<td>0.202032</td>
+<td>0.225924</td>
+<td>0.362324</td>
+<td>0.008590</td>
+<td>0.138614</td>
+<td>0.182723</td>
+</tr>
+<tr>
+<td>0.207824</td>
+<td>0.002132</td>
+<td>0.005982</td>
+<td>0.041657</td>
+<td>0.007498</td>
+<td>0.406642</td>
+<td>0.064929</td>
+<td>0.229260</td>
+<td>0.034075</td>
+<td>0.155952</td>
+<td>0.201185</td>
+</tr>
+<tr>
+<td>0.096565</td>
+<td>0.016775</td>
+<td>0.118409</td>
+<td>0.037725</td>
+<td>0.020013</td>
+<td>0.045195</td>
+<td>0.512282</td>
+<td>0.153015</td>
+<td>0.000020</td>
+<td>0.118787</td>
+<td>0.148958</td>
+</tr>
+<tr>
+<td>0.131309</td>
+<td>0.002733</td>
+<td>0.002360</td>
+<td>0.047573</td>
+<td>0.050633</td>
+<td>0.289410</td>
+<td>0.313717</td>
+<td>0.157123</td>
+<td>0.005141</td>
+<td>0.138304</td>
+<td>0.171473</td>
+</tr>
+</tbody>
+</table>
+<div class="language-py highlight"><span class="filename">Portafolio MSR</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">risk_free</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Asumamos que es 0</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">pesos_aleatorios</span><span class="p">[</span><span class="s2">&quot;Sharpe&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">pesos_aleatorios</span><span class="p">[</span><span class="s2">&quot;Returns&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">risk_free</span><span class="p">)</span> <span class="o">/</span> 
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>                            <span class="n">pesos_aleatorios</span><span class="p">[</span><span class="s2">&quot;Volatility&quot;</span><span class="p">]</span> 
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>                           <span class="p">)</span> <span class="c1">#(1)!</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">peso_sharpe</span><span class="o">=</span><span class="n">pesos_aleatorios</span><span class="p">[</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>                <span class="n">pesos_aleatorios</span><span class="p">[</span><span class="s2">&quot;Sharpe&quot;</span><span class="p">]</span> <span class="o">==</span> 
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>                <span class="n">pesos_aleatorios</span><span class="p">[</span><span class="s2">&quot;Sharpe&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>                <span class="p">]</span> <span class="c1">#(2)!</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">msr_pesos</span><span class="o">=</span><span class="n">peso_sharpe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="mi">9</span><span class="p">]</span> <span class="c1">#(3)!</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">portafolio</span><span class="p">[</span><span class="s2">&quot;RendimientoMSR&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">portafolio</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">9</span><span class="p">]</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">msr_pesos</span><span class="p">)</span> <span class="c1">#(4)!</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="n">cumulative_returns_plot</span><span class="p">(</span><span class="n">portafolio</span><span class="p">,</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>                <span class="n">columas</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Rendimiento_MCap&quot;</span><span class="p">,</span> <span class="s2">&quot;RendimientoEW&quot;</span><span class="p">,</span> <span class="s2">&quot;RendimientoMSR&quot;</span><span class="p">]</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>                <span class="p">)</span> <span class="c1">#(5)!</span>
+</span></code></pre></div>
+<ol>
+<li>Se calcula los índices de Sharpe, mediante la fórmula mostrada.</li>
+<li>Se obtiene la fila donde se está el <strong>índice de shape máximo</strong>.</li>
+<li>Se escoge solo los <strong>pesos</strong> del índice de Shape Ratio máximo (<strong>MSR</strong>).</li>
+<li>Se realiza el cálculo del rendimiento, <strong>producto matricial</strong> entre los <strong>activos del portafolio</strong> y la matriz de los <strong>pesos</strong>.</li>
+<li>Se grafica los tres rendimientos.</li>
+</ol>
+<figure>
+  <img alt="Image title" src="../../../images/finanzas-1-gestion-riesgo-portafolio/GraficaMSR.png" width="100%" />
+  <figcaption>Retorno acumulado del MSR</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Conclusión</p>
+<p>Se puede ver en el gráfico que aún eligiendo la cartera con mayor <strong>Sharpe Ratio</strong> (MSR) nuestro rendimiento no es muy bueno, incluso es menor a la media, esto es porque los datos con que se trabajó fueron datos históricos y ahora se probó con datos "actuales", demostrando que el Sharpe Ratio no es una predicción sino una medida de comparativa.</p>
+<p>Desafortunadamente, la cartera MSR suele ser bastante errática. Aunque la cartera haya tenido un ratio de Sharpe histórico alto, eso no garantiza que la cartera tenga un buen ratio de Sharpe en el futuro.</p>
+</div>
+<div class="language-py highlight"><span class="filename">Portafolio GMV</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">gmv_pesos</span><span class="o">=</span><span class="n">pesos_aleatorios</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>                            <span class="s1">&#39;Volatility&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>                            <span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="mi">9</span><span class="p">]</span> <span class="c1">#(1)!</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">portafolio</span><span class="p">[</span><span class="s2">&quot;RendimientoGMV&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">portafolio</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">9</span><span class="p">]</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gmv_pesos</span><span class="p">)</span> <span class="c1">#(2)!</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">cumulative_returns_plot</span><span class="p">(</span><span class="n">portafolio</span><span class="p">,</span> 
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>            <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Rendimiento_MCap&quot;</span><span class="p">,</span> <span class="s2">&quot;RendimientoEW&quot;</span><span class="p">,</span> 
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>            <span class="s2">&quot;RendimientoMSR&quot;</span><span class="p">,</span> <span class="s2">&quot;RendimientoGMV&quot;</span><span class="p">])</span>
+</span></code></pre></div>
+<ol>
+<li>Se ordena respecto a la columna <code>Volatility</code> y tomamos los pesos la primera fila, esta es la que tiene la volatilidad más baja de todas.</li>
+<li>Se calcula el rendimiento respecto a los pesos del <strong>GMV</strong>.</li>
+</ol>
+<figure>
+  <img alt="Image title" src="../../../images/finanzas-1-gestion-riesgo-portafolio/RetornoGMV.png" width="100%" />
+  <figcaption>Retorno acumulado del GMV</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Conclusión</p>
+<p>Podemos ver cómo la gráfica de la cartera <strong>GMV</strong> si bien tiene un retorno menor al <strong>MSR</strong>, se puede rescatar que no fluctua tan drásticamente como su contraparte, obtieniendo un rendimiento alrededor del <span class="arithmatex">\(10\%\)</span> y sin correr mucho riesgo. Aún así, sigue siendo menor a una estrategia simple como es el <code>RendimientoEW</code> (todos los pesos son iguales).</p>
+</div>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../1-riesgo-retorno/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Riesgo y Retorno">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Riesgo y Retorno
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../3-factor-investing/" class="md-footer__link md-footer__link--next" aria-label="Next: Inversión Factorial">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Inversión Factorial
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/squidfunk" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/r/squidfunk/mkdocs-material/" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1zm0-204.3h-66.1v60.7h66.1zm78.2 144.8H362v59.4h66.1zm-156.3-72.1h-66.1v60.1h66.1zm78.1 0h-66.1v60.1h66.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1zm78.1 0h-66.1v59.4h66.1zm-78.1-72.1h-66.1v60.1h66.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/mkdocs-material/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bsky.app/profile/squidfunk.bsky.social" target="_blank" rel="noopener" title="bsky.app" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M111.8 62.2C170.2 105.9 233 194.7 256 242.4c23-47.6 85.8-136.4 144.2-180.2 42.1-31.6 110.3-56 110.3 21.8 0 15.5-8.9 130.5-14.1 149.2-18.2 64.8-84.4 81.4-143.3 71.3C456 322 482.2 380 425.6 438c-107.4 110.2-154.3-27.6-166.3-62.9-1.7-4.9-2.6-7.8-3.3-7.8s-1.6 3-3.3 7.8c-12 35.3-59 173.1-166.3 62.9-56.5-58-30.4-116 72.5-133.5C100 314.6 33.8 298 15.7 233.1 10.4 214.4 1.5 99.4 1.5 83.9c0-77.8 68.2-53.4 110.3-21.8z"/></svg>
+    </a>
+  
+    
+    
+      
+    
+    
+    
+      
+      
+    
+    <a href="https://fosstodon.org/@squidfunk" target="_blank" rel="noopener me" title="fosstodon.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.5 102.5 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5m-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/squidfunk" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8l164.9-188.5L26.8 48h145.6l100.5 132.9zm-24.8 373.8h39.1L151.1 88h-42z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
