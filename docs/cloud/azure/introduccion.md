@@ -72,16 +72,13 @@ Ofrecen protocolos de seguridad avanzados, incluyendo cifrados, autentificación
 
 
 ## Modelos de servicios Cloud
-![alt text](image.png)
+
 <figure markdown="span">
   ![Image title](../../images/cloud/azure/CloudModels.png){ width=100% }
   <figcaption>Modelos de Cloud</figcaption>
 </figure>
 
 Existen tres modelos principales de servicio en la nube, cada uno con diferentes niveles de control, flexibilidad y responsabilidad para el usuario. Estos modelos son:
-
-
-
 
 ### IaaS (Infrastructure as a Service)
 
@@ -109,3 +106,4 @@ Este modelo es conocido como **sin servidor**, el proveedor gestiona todos los a
 Ejemplo de estos son: **AWS Lambda, Azure Functions, Google Cloud Functions, Zapier.**
 
 *[Servelees]: Es una forma de decirlo, ya que sí requerie de un servidor para su ejecución, pero se centra en la ejecución de funciones.
+
